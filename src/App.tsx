@@ -145,7 +145,8 @@ const Hero = () => (
         </div>
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6">
           에어컨의 모든 것,<br />
-          <span className="text-blue-500">19년의 노하우</span>로 케어합니다.
+          <span className="text-blue-500">19년의 노하우로</span><br />
+          케어합니다.
         </h1>
         <p className="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
           LG, 삼성, 캐리어 판매 및 설치 전문<br />
