@@ -1,0 +1,5 @@
+{
+  "name": "조군에어컨 - 에어컨 설치 및 세척 전문",
+  "description": "조군에어컨: 에어컨 설치, 분해 세척, 이전 설치 전문 업체. 신속하고 정확한 서비스로 쾌적한 환경을 약속드립니다.",
+  "requestFramePermissions": ["geolocation"]
+}
