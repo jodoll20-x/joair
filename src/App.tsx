@@ -295,7 +295,7 @@ const Portfolio = () => {
             <p className="text-4xl font-bold text-gray-900">최근 작업 포트폴리오</p>
           </div>
           <div className="flex gap-2">
-            {['전체', '설치'].map(tab => (
+            {['전체'].map(tab => (
               <button key={tab} className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
                 tab === '전체' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}>
