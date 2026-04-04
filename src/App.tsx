@@ -402,7 +402,7 @@ const MapSection = () => (
             <p className="font-bold text-xl mb-4">서비스 가능 지역</p>
             <p className="text-blue-100 leading-relaxed">
               서울 전 지역 및 경기 주요 도시<br />
-              (수원, 용인, 성남, 하남, 구리, 남양주, 의정부, 고양, 김포, 부천, 광명, 안양, 과천, 의왕, 군포, 시흥, 안산 등)
+              (화성, 오산, 평택, 수원, 용인, 성남, 하남, 김포, 안양, 과천, 의왕, 군포, 시흥, 안산 등)
             </p>
             <div className="mt-6 pt-6 border-t border-blue-500/30">
               <p className="text-sm text-blue-200">※ 그 외 지역은 전화 문의 부탁드립니다.</p>
