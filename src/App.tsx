@@ -120,7 +120,7 @@ const Header = () => {
 };
 
 const Hero = () => (
-  <section className="relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden">
+  <section className="relative min-h-[90vh] md:h-screen flex items-center py-16 md:py-20 overflow-hidden">
     {/* Background Image with Overlay */}
     <div className="absolute inset-0 z-0">
       <img 
@@ -139,33 +139,33 @@ const Hero = () => (
         transition={{ duration: 0.8 }}
         className="max-w-2xl"
       >
-        <div className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 px-4 py-1.5 rounded-full text-blue-400 text-sm font-semibold mb-8">
+        <div className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 px-4 py-1.5 rounded-full text-blue-400 text-sm font-semibold mb-6">
           <MapPin size={14} />
           서울/경기 전 지역 출장 서비스
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-8">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6">
           에어컨의 모든 것,<br />
           <span className="text-blue-500">19년의 노하우</span>로 케어합니다.
         </h1>
-        <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+        <p className="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
           LG, 삼성, 캐리어 판매 및 설치 전문<br />
           화성에서 10년 가까이 신뢰를 쌓아온 에어컨 전문가입니다.
         </p>
-        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-3xl mb-12">
-          <p className="text-sm text-blue-300 font-bold mb-3 flex items-center gap-2">
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-3xl mb-8 max-w-xl">
+          <p className="text-sm text-blue-300 font-bold mb-2 flex items-center gap-2">
             <CheckCircle2 size={16} /> 주요 이력
           </p>
-          <ul className="text-gray-300 text-sm space-y-2">
+          <ul className="text-gray-300 text-xs md:text-sm space-y-1.5">
             <li className="flex items-start gap-2">
-              <span className="text-blue-500 mt-1">•</span>
+              <span className="text-blue-500">•</span>
               <span>지하철 승강장 천장형 멀티(서현역) 최초 시공</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-blue-500 mt-1">•</span>
+              <span className="text-blue-500">•</span>
               <span>주거형 오피스텔 천장형(구로) 최초 시공</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-blue-500 mt-1">•</span>
+              <span className="text-blue-500">•</span>
               <span>강남구 스트레스 프리존 최초 시공</span>
             </li>
           </ul>
@@ -174,9 +174,9 @@ const Hero = () => (
         <div className="flex flex-col sm:flex-row gap-4">
           <a 
             href="tel:01071202305" 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-5 rounded-2xl font-bold text-xl flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-2xl shadow-blue-600/40"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-2xl shadow-blue-600/40"
           >
-            <Phone size={24} />
+            <Phone size={22} />
             빠른 전화 상담하기
           </a>
         </div>
@@ -188,7 +188,7 @@ const Hero = () => (
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5, duration: 0.8 }}
-      className="absolute bottom-10 right-4 sm:right-10 hidden lg:block"
+      className="absolute bottom-8 right-4 sm:right-10 hidden lg:block"
     >
       <div className="bg-white p-6 rounded-2xl shadow-2xl border border-gray-100">
         <div className="flex items-center gap-4 mb-4">
