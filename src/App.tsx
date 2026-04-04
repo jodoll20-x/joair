@@ -51,7 +51,7 @@ const Header = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {['서비스', '포트폴리오', '견적문의', '오시는길'].map((item) => (
+          {['서비스', '포트폴리오', '견적문의', '사무실위치'].map((item) => (
             <a 
               key={item} 
               href={`#${item}`} 
@@ -59,7 +59,7 @@ const Header = () => {
                 isScrolled ? 'text-gray-600' : 'text-white/90'
               }`}
             >
-              {item}
+              {item === '사무실위치' ? '사무실 위치' : item}
             </a>
           ))}
           <a 
@@ -94,14 +94,14 @@ const Header = () => {
             className="absolute top-full left-0 right-0 bg-white shadow-xl border-t border-gray-100 md:hidden"
           >
             <div className="px-4 py-6 space-y-4">
-              {['서비스', '포트폴리오', '견적문의', '오시는길'].map((item) => (
+              {['서비스', '포트폴리오', '견적문의', '사무실위치'].map((item) => (
                 <a 
                   key={item} 
                   href={`#${item}`} 
                   className="block text-lg font-medium text-gray-900 hover:text-blue-600"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {item}
+                  {item === '사무실위치' ? '사무실 위치' : item}
                 </a>
               ))}
               <a 
@@ -120,7 +120,7 @@ const Header = () => {
 };
 
 const Hero = () => (
-  <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+  <section className="relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden">
     {/* Background Image with Overlay */}
     <div className="absolute inset-0 z-0">
       <img 
@@ -129,35 +129,54 @@ const Hero = () => (
         className="w-full h-full object-cover"
         referrerPolicy="no-referrer"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/70 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-900/95 via-gray-900/80 to-transparent" />
     </div>
 
-    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
       <motion.div 
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-2xl"
       >
-        <div className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 px-4 py-1.5 rounded-full text-blue-400 text-sm font-semibold mb-6">
+        <div className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 px-4 py-1.5 rounded-full text-blue-400 text-sm font-semibold mb-8">
           <MapPin size={14} />
           서울/경기 전 지역 출장 서비스
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-6">
+        <h1 className="text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-8">
           에어컨의 모든 것,<br />
-          <span className="text-blue-500">완벽한 케어</span>를 약속합니다.
+          <span className="text-blue-500">19년의 노하우</span>로 케어합니다.
         </h1>
-        <p className="text-xl text-gray-300 mb-10 leading-relaxed">
-          벽걸이, 스탠드, 시스템 에어컨 설치부터<br />
-          전문 장비를 활용한 99.9% 살균 세척까지 한 번에 해결하세요.
+        <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+          LG, 삼성, 캐리어 판매 및 설치 전문<br />
+          화성에서 10년 가까이 신뢰를 쌓아온 에어컨 전문가입니다.
         </p>
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-3xl mb-12">
+          <p className="text-sm text-blue-300 font-bold mb-3 flex items-center gap-2">
+            <CheckCircle2 size={16} /> 주요 이력
+          </p>
+          <ul className="text-gray-300 text-sm space-y-2">
+            <li className="flex items-start gap-2">
+              <span className="text-blue-500 mt-1">•</span>
+              <span>지하철 승강장 천장형 멀티(서현역) 최초 시공</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-500 mt-1">•</span>
+              <span>주거형 오피스텔 천장형(구로) 최초 시공</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-500 mt-1">•</span>
+              <span>강남구 스트레스 프리존 최초 시공</span>
+            </li>
+          </ul>
+        </div>
         
         <div className="flex flex-col sm:flex-row gap-4">
           <a 
             href="tel:01071202305" 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all transform hover:scale-105 shadow-xl shadow-blue-600/30"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-5 rounded-2xl font-bold text-xl flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-2xl shadow-blue-600/40"
           >
-            <Phone size={20} />
+            <Phone size={24} />
             빠른 전화 상담하기
           </a>
         </div>
@@ -259,12 +278,12 @@ const Services = () => {
 
 const Portfolio = () => {
   const projects = [
-    { id: 1, title: "시스템 에어컨 설치 완료", category: "설치", img: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1000" },
-    { id: 2, title: "천장형 에어컨 시공 현장", category: "설치", img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=1000" },
-    { id: 3, title: "깔끔한 실내기 마감", category: "설치", img: "https://images.unsplash.com/photo-1599939571322-792a326991f2?auto=format&fit=crop&q=80&w=1000" },
-    { id: 4, title: "실외기 거치 및 연결", category: "설치", img: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=1000" },
-    { id: 5, title: "외부 실외기 설치 작업", category: "설치", img: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1000" },
-    { id: 6, title: "상가 실외기 전문 시공", category: "설치", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1000" },
+    { id: 1, title: "시스템 에어컨 설치 완료", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfMTU3/MDAxNzc1Mjc4MTQ1MzU1.YJnIWvY1JcSNCgZF98HH_PQqDHkenONHN0iuqOuJyT0g.9_hKx5ifMkguJqx5rI_p92MGCex7h_-8C9o2TVsWIeIg.JPEG/KakaoTalk_20260404_114134079_04.jpg?type=w773" },
+    { id: 2, title: "천장형 에어컨 시공 현장", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfMjk5/MDAxNzc1Mjc3OTY0MzE2.SJBfNOkeodFx1rFKCA5uyF9E5LAsFQHMCxYELY9ebekg.vHZqLVscBXlOUH-oHNvM5WNQqdYBHy9MpTVXNmfm9jgg.JPEG/SE-a7f09b44-2ea0-4e4e-8991-723905520109.jpg?type=w773" },
+    { id: 3, title: "깔끔한 실외기 마감", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfODYg/MDAxNzc1Mjc3NTQ3Mjgw.WQeaYuVrIX2I_nUCk-9QcoOkTppqej4cdsg0wXe01YQg.H9jampFiucbfrQFfbAl5Xha7hXZcLw-ysttYz2nD80Mg.JPEG/SE-883fe084-1c37-48b1-944a-da971f6321bd.jpg?type=w773" },
+    { id: 4, title: "실내기 거치 및 연결", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfNTMg/MDAxNzc1Mjc3NDY0ODI2.EcPI9O040xCxZF5jrP4HkcgrWLnjXShn4VWrtrbyXeMg.1bjv8e4MFgM83ckGItY6lYs2X7uq77SWiy0XkGB9ggMg.JPEG/20250908_135833.jpg?type=w773" },
+    { id: 5, title: "외부 실외기 설치 작업", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfMjA3/MDAxNzc1Mjc3MjE3NjUy.CHvmx6hzJj9PpjaFpigRLy1Y0PMUpdDEDPv2lHjxXFgg.7Y-au1l3z3ne8z_aIfZKttClbVZEJZazCYdvwlvQIdcg.JPEG/KakaoTalk_20260404_114134079_14.jpg?type=w773" },
+    { id: 6, title: "상가 실내기 전문 시공", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfMTAz/MDAxNzc1Mjc4NDIwMzgx.6mhGd9jlwtgrpLPu-AYe5skpsnrcUvy1Dm6s747ogTUg.R8dtsWPgtGRfGK_T6THPtFEUHpy8ao3hg7d2v0eoCpsg.JPEG/20260306_113611.jpg?type=w773" },
   ];
 
   return (
@@ -349,11 +368,11 @@ const ContactSection = () => {
 };
 
 const MapSection = () => (
-  <section id="오시는길" className="py-24 bg-gray-50">
+  <section id="사무실위치" className="py-24 bg-gray-50">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Location</h2>
-        <p className="text-4xl font-bold text-gray-900 mb-12">찾아오시는 길</p>
+        <p className="text-4xl font-bold text-gray-900 mb-12">사무실 위치</p>
         
         <div className="grid md:grid-cols-2 gap-8 text-left">
           <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
@@ -407,10 +426,16 @@ const Footer = () => (
               조군 <span className="text-blue-500">에어컨</span>
             </span>
           </div>
-          <p className="max-w-sm mb-8 leading-relaxed">
-            조군에어컨은 15년 경력의 전문가들이 모여 만든 에어컨 케어 전문 브랜드입니다. 
-            고객님의 쾌적한 여름을 위해 정직하고 투명한 서비스를 약속드립니다.
+          <p className="max-w-sm mb-6 leading-relaxed">
+            조군에어컨은 <span className="text-white font-bold underline decoration-blue-500 underline-offset-4">19년 경력</span>의 전문가가 직접 시공하는 에어컨 전문 브랜드입니다. 
+            LG, 삼성, 캐리어 판매 및 설치와 업소, 공장, 오피스텔, 빌라 공사 등 화성에서 10년 가까이 믿음으로 유지해온 신뢰의 업체입니다.
           </p>
+          <div className="bg-gray-800/50 p-4 rounded-xl mb-8 border border-gray-800">
+            <p className="text-blue-400 font-bold text-sm mb-2">주요 이력</p>
+            <p className="text-xs leading-relaxed text-gray-400">
+              지하철 승강장 천장형 멀티(서현역), 주거형 오피스텔 천장형(구로), 스트레스 프리존(강남구) 등 최초 시공자
+            </p>
+          </div>
           <div className="mb-4 text-sm space-y-1">
             <p>대표: 조인형 | 사업자번호: 102-04-02694</p>
             <p>주소: 경기도 화성시 향남읍 서봉로 372</p>
