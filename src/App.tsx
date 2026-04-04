@@ -150,7 +150,7 @@ const Hero = () => (
         </h1>
         <p className="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
           LG, 삼성, 캐리어 판매 및 설치 전문<br />
-          화성에서 10년 가까이 신뢰를 쌓아온 에어컨 전문가입니다.
+          시스템, 중대형, 업소용 에어컨, 냉난방기 전문 업체입니다.
         </p>
         <div className="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-3xl mb-8 max-w-xl">
           <p className="text-sm text-blue-300 font-bold mb-2 flex items-center gap-2">
@@ -218,11 +218,11 @@ const Hero = () => (
 const Services = () => {
   const services = [
     {
-      title: "에어컨 설치",
-      desc: "벽걸이, 스탠드, 2in1 등 모든 기종의 완벽한 설치 및 가스 충전",
-      icon: <Wrench className="w-8 h-8" />,
-      color: "bg-blue-500",
-      items: ["신규 설치", "이전 설치", "가스 보충", "배관 연장"]
+      title: "시스템 에어컨",
+      desc: "아파트, 상가, 사무실 대형 시스템 에어컨 전문 설계 및 시공",
+      icon: <Wind className="w-8 h-8" />,
+      color: "bg-indigo-500",
+      items: ["천장형 설치", "멀티 V 시공", "공장 대형 설치", "원룸 및 상가 설치"]
     },
     {
       title: "분해 세척",
@@ -232,11 +232,11 @@ const Services = () => {
       items: ["고압 세척", "스팀 살균", "필터 청소"]
     },
     {
-      title: "시스템 에어컨",
-      desc: "아파트, 상가, 사무실 대형 시스템 에어컨 전문 설계 및 시공",
-      icon: <Wind className="w-8 h-8" />,
-      color: "bg-indigo-500",
-      items: ["천장형 설치", "멀티 V 시공", "대형 유지보수", "정기 점검"]
+      title: "에어컨 설치",
+      desc: "벽걸이, 스탠드, 2in1 등 모든 기종의 완벽한 설치 및 가스 충전",
+      icon: <Wrench className="w-8 h-8" />,
+      color: "bg-blue-500",
+      items: ["신규 설치", "이전 설치", "가스 보충", "배관 연장"]
     }
   ];
 
