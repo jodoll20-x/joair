@@ -259,12 +259,12 @@ const Services = () => {
 
 const Portfolio = () => {
   const projects = [
-    { id: 1, title: "시스템 에어컨 설치 완료", category: "설치", img: "https://aistudio.google.com/u/1/_/upload/ed98ea70-fece-4213-9f4c-72db476178cc/attachment/1775297036.765442000/blobstore/prod/makersuite/spanner_managed/global::000054e2ea70026d:0000015f:2:000054e2ea70026d:0000000000000001::afb2489aec3a5835:000001f12c9018bc:00064e9f8d3b33af?authuser=1" },
-    { id: 2, title: "천장형 에어컨 시공 현장", category: "설치", img: "https://aistudio.google.com/u/1/_/upload/ed98ea70-fece-4213-9f4c-72db476178cc/attachment/1775297036.765442000/blobstore/prod/makersuite/spanner_managed/global::000054e2ea70026d:0000015f:2:000054e2ea70026d:0000000000000001::9170ae20f4f750c4:000001f12c9018bc:00064e9f8d3b33af?authuser=1" },
-    { id: 3, title: "깔끔한 실내기 마감", category: "설치", img: "https://aistudio.google.com/u/1/_/upload/ed98ea70-fece-4213-9f4c-72db476178cc/attachment/1775297036.765442000/blobstore/prod/makersuite/spanner_managed/global::000054e2ea70026d:0000015f:2:000054e2ea70026d:0000000000000001::742c75bebebc6996:000001f12c9018bc:00064e9f8d3b33af?authuser=1" },
-    { id: 4, title: "실외기 거치 및 연결", category: "설치", img: "https://aistudio.google.com/u/1/_/upload/ed98ea70-fece-4213-9f4c-72db476178cc/attachment/1775297036.765442000/blobstore/prod/makersuite/spanner_managed/global::000054e2ea70026d:0000015f:2:000054e2ea70026d:0000000000000001::d5ee5b3cd37d61e7:000001f12c9018bc:00064e9f8d3b33af?authuser=1" },
-    { id: 5, title: "외부 실외기 설치 작업", category: "설치", img: "https://aistudio.google.com/u/1/_/upload/ed98ea70-fece-4213-9f4c-72db476178cc/attachment/1775297036.765442000/blobstore/prod/makersuite/spanner_managed/global::000054e2ea70026d:0000015f:2:000054e2ea70026d:0000000000000001::28b4ef02af463af2:000001f12c9018bc:00064e9f8d3b33af?authuser=1" },
-    { id: 6, title: "상가 실외기 전문 시공", category: "설치", img: "https://aistudio.google.com/u/1/_/upload/ed98ea70-fece-4213-9f4c-72db476178cc/attachment/1775297036.765442000/blobstore/prod/makersuite/spanner_managed/global::000054e2ea70026d:0000015f:2:000054e2ea70026d:0000000000000001::0a760878a2033284:000001f12c9018bc:00064e9f8d3b33af?authuser=1" },
+    { id: 1, title: "시스템 에어컨 설치 완료", category: "설치", img: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1000" },
+    { id: 2, title: "천장형 에어컨 시공 현장", category: "설치", img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=1000" },
+    { id: 3, title: "깔끔한 실내기 마감", category: "설치", img: "https://images.unsplash.com/photo-1599939571322-792a326991f2?auto=format&fit=crop&q=80&w=1000" },
+    { id: 4, title: "실외기 거치 및 연결", category: "설치", img: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=1000" },
+    { id: 5, title: "외부 실외기 설치 작업", category: "설치", img: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1000" },
+    { id: 6, title: "상가 실외기 전문 시공", category: "설치", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1000" },
   ];
 
   return (
