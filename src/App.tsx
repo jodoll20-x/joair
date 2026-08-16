@@ -5,6 +5,21 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+
+declare global {
+  interface Window {
+    karrotPixel?: {
+      track: (eventName: string, params?: Record<string, any>) => void;
+      init: (id: string) => void;
+    };
+  }
+}
+
+const handleTrackLead = () => {
+  if (typeof window !== 'undefined' && window.karrotPixel) {
+    window.karrotPixel.track('Lead');
+  }
+};
 import { 
   Phone, 
   MapPin, 
@@ -64,6 +79,7 @@ const Header = () => {
           ))}
           <a 
             href="tel:01071202305" 
+            onClick={handleTrackLead}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-lg shadow-blue-600/20"
           >
             <Phone size={16} />
@@ -106,6 +122,7 @@ const Header = () => {
               ))}
               <a 
                 href="tel:01071202305" 
+                onClick={handleTrackLead}
                 className="flex items-center justify-center gap-2 bg-blue-600 text-white py-4 rounded-xl font-bold"
               >
                 <Phone size={20} />
@@ -175,6 +192,7 @@ const Hero = () => (
         <div className="flex flex-col sm:flex-row gap-4">
           <a 
             href="tel:01071202305" 
+            onClick={handleTrackLead}
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-2xl shadow-blue-600/40"
           >
             <Phone size={22} />
@@ -358,7 +376,7 @@ const ContactSection = () => {
               </div>
               <div className="text-left">
                 <p className="text-blue-200 text-sm font-bold">빠른 전화 상담</p>
-                <a href="tel:01071202305" className="text-3xl md:text-4xl font-extrabold hover:text-blue-200 transition-colors">010-7120-2305</a>
+                <a href="tel:01071202305" onClick={handleTrackLead} className="text-3xl md:text-4xl font-extrabold hover:text-blue-200 transition-colors">010-7120-2305</a>
               </div>
             </div>
           </div>
@@ -464,7 +482,7 @@ const Footer = () => (
           <ul className="space-y-4">
             <li className="flex items-center gap-3">
               <Phone size={16} className="text-blue-500" />
-              010-7120-2305
+              <a href="tel:01071202305" onClick={handleTrackLead} className="hover:text-white transition-colors">010-7120-2305</a>
             </li>
             <li className="flex items-center gap-3">
               <MapPin size={16} className="text-blue-500" />
@@ -490,6 +508,17 @@ const Footer = () => (
 );
 
 export default function App() {
+  useEffect(() => {
+    const handleGlobalTelClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest('a[href^="tel:"]');
+      if (target) {
+        handleTrackLead();
+      }
+    };
+    document.addEventListener('click', handleGlobalTelClick);
+    return () => document.removeEventListener('click', handleGlobalTelClick);
+  }, []);
+
   return (
     <div className="font-sans text-gray-900 bg-white selection:bg-blue-100 selection:text-blue-600">
       <Header />
@@ -506,6 +535,7 @@ export default function App() {
       <div className="fixed bottom-6 right-6 z-40 md:hidden">
         <a 
           href="tel:01071202305"
+          onClick={handleTrackLead}
           className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-2xl animate-bounce"
         >
           <Phone size={28} />
