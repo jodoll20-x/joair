@@ -262,8 +262,8 @@ const Services = () => {
     <section id="서비스" className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Professional Services</h2>
-          <p className="text-4xl font-bold text-gray-900 mb-4">제공하는 전문 서비스</p>
+          <p className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Professional Services</p>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">제공하는 전문 서비스</h2>
           <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full" />
         </div>
 
@@ -310,8 +310,8 @@ const Portfolio = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Our Work</h2>
-            <p className="text-4xl font-bold text-gray-900">최근 작업 포트폴리오</p>
+            <p className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Our Work</p>
+            <h2 className="text-4xl font-bold text-gray-900">최근 작업 포트폴리오</h2>
           </div>
           <div className="flex gap-2">
             {['전체'].map(tab => (
@@ -390,8 +390,8 @@ const MapSection = () => (
   <section id="사무실위치" className="py-24 bg-gray-50">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Location</h2>
-        <p className="text-4xl font-bold text-gray-900 mb-12">사무실 위치</p>
+        <p className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Location</p>
+        <h2 className="text-4xl font-bold text-gray-900 mb-12">사무실 위치</h2>
         
         <div className="grid md:grid-cols-2 gap-8 text-left">
           <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
@@ -400,7 +400,7 @@ const MapSection = () => (
                 <MapPin className="text-blue-600" />
               </div>
               <div>
-                <p className="font-bold text-gray-900 mb-1">본사 주소</p>
+                <h3 className="font-bold text-gray-900 mb-1">본사 주소</h3>
                 <p className="text-gray-600">경기도 화성시 향남읍 서봉로 372</p>
               </div>
             </div>
@@ -409,7 +409,7 @@ const MapSection = () => (
                 <Clock className="text-blue-600" />
               </div>
               <div>
-                <p className="font-bold text-gray-900 mb-1">영업 시간</p>
+                <h3 className="font-bold text-gray-900 mb-1">영업 시간</h3>
                 <p className="text-gray-600">평일 09:00 - 19:00</p>
                 <p className="text-gray-600">주말 10:00 - 17:00 (예약제)</p>
               </div>
@@ -417,7 +417,7 @@ const MapSection = () => (
           </div>
 
           <div className="bg-blue-600 p-8 rounded-3xl shadow-xl text-white">
-            <p className="font-bold text-xl mb-4">서비스 가능 지역</p>
+            <h3 className="font-bold text-xl mb-4">서비스 가능 지역</h3>
             <p className="text-blue-100 leading-relaxed">
               서울 전 지역 및 경기 주요 도시<br />
               (화성, 오산, 평택, 수원, 용인, 성남, 하남, 김포, 안양, 과천, 의왕, 군포, 시흥, 안산 등)
@@ -469,7 +469,7 @@ const Footer = () => (
         </div>
         
         <div>
-          <h4 className="text-white font-bold mb-6">Quick Links</h4>
+          <h3 className="text-white font-bold mb-6">Quick Links</h3>
           <ul className="space-y-4">
             {['서비스 소개', '포트폴리오'].map(item => (
               <li key={item}><a href="#" className="hover:text-blue-500 transition-colors">{item}</a></li>
@@ -478,7 +478,7 @@ const Footer = () => (
         </div>
 
         <div>
-          <h4 className="text-white font-bold mb-6">Contact Info</h4>
+          <h3 className="text-white font-bold mb-6">Contact Info</h3>
           <ul className="space-y-4">
             <li className="flex items-center gap-3">
               <Phone size={16} className="text-blue-500" />
