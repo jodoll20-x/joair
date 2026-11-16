@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { getRouteSEO, normalizePath } from './seo';
 
 declare global {
   interface Window {
@@ -40,7 +41,22 @@ import {
 
 // --- Components ---
 
-const Header = () => {
+const NAV_ITEMS = [
+  { label: '서비스', path: '/services' },
+  { label: '포트폴리오', path: '/portfolio' },
+  { label: '견적문의', path: '/contact' },
+  { label: '사무실 위치', path: '/location' },
+] as const;
+
+type NavigateHandler = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => void;
+
+const Header = ({
+  currentPath,
+  onNavigate,
+}: {
+  currentPath: string;
+  onNavigate: NavigateHandler;
+}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -50,33 +66,53 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isSolid = isScrolled || currentPath !== '/';
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
+      isSolid ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <a
+          href="/"
+          onClick={(e) => {
+            setIsMobileMenuOpen(false);
+            onNavigate(e, '/');
+          }}
+          className="flex items-center gap-2"
+        >
           <div className="bg-blue-600 p-2 rounded-lg">
             <Wind className="text-white w-6 h-6" />
           </div>
-          <span className={`text-xl font-bold tracking-tight ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
+          <span className={`text-xl font-bold tracking-tight ${isSolid ? 'text-gray-900' : 'text-white'}`}>
             조군 <span className="text-blue-500">에어컨</span>
           </span>
-        </div>
+        </a>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {['서비스', '포트폴리오', '견적문의', '사무실위치'].map((item) => (
-            <a 
-              key={item} 
-              href={`#${item}`} 
-              className={`text-sm font-medium hover:text-blue-500 transition-colors ${
-                isScrolled ? 'text-gray-600' : 'text-white/90'
-              }`}
-            >
-              {item === '사무실위치' ? '사무실 위치' : item}
-            </a>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const isActive = currentPath === item.path;
+            return (
+              <a
+                key={item.path}
+                href={item.path}
+                onClick={(e) => onNavigate(e, item.path)}
+                aria-current={isActive ? 'page' : undefined}
+                className={`text-sm font-medium hover:text-blue-500 transition-colors ${
+                  isActive
+                    ? isSolid
+                      ? 'text-blue-600 font-semibold'
+                      : 'text-blue-400 font-semibold'
+                    : isSolid
+                      ? 'text-gray-600'
+                      : 'text-white/90'
+                }`}
+              >
+                {item.label}
+              </a>
+            );
+          })}
           <a 
             href="tel:01071202305" 
             onClick={handleTrackLead}
@@ -90,12 +126,13 @@ const Header = () => {
         {/* Mobile Menu Toggle */}
         <button 
           className="md:hidden p-2"
+          aria-label="메뉴 열기"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? (
-            <X className={isScrolled ? 'text-gray-900' : 'text-white'} />
+            <X className={isSolid ? 'text-gray-900' : 'text-white'} />
           ) : (
-            <Menu className={isScrolled ? 'text-gray-900' : 'text-white'} />
+            <Menu className={isSolid ? 'text-gray-900' : 'text-white'} />
           )}
         </button>
       </div>
@@ -110,16 +147,25 @@ const Header = () => {
             className="absolute top-full left-0 right-0 bg-white shadow-xl border-t border-gray-100 md:hidden"
           >
             <div className="px-4 py-6 space-y-4">
-              {['서비스', '포트폴리오', '견적문의', '사무실위치'].map((item) => (
-                <a 
-                  key={item} 
-                  href={`#${item}`} 
-                  className="block text-lg font-medium text-gray-900 hover:text-blue-600"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item === '사무실위치' ? '사무실 위치' : item}
-                </a>
-              ))}
+              {NAV_ITEMS.map((item) => {
+                const isActive = currentPath === item.path;
+                return (
+                  <a
+                    key={item.path}
+                    href={item.path}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`block text-lg font-medium hover:text-blue-600 ${
+                      isActive ? 'text-blue-600 font-bold' : 'text-gray-900'
+                    }`}
+                    onClick={(e) => {
+                      setIsMobileMenuOpen(false);
+                      onNavigate(e, item.path);
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
               <a 
                 href="tel:01071202305" 
                 onClick={handleTrackLead}
@@ -233,7 +279,8 @@ const Hero = () => (
   </section>
 );
 
-const Services = () => {
+const Services = ({ isStandalone = false }: { isStandalone?: boolean }) => {
+  const Heading = isStandalone ? 'h1' : 'h2';
   const services = [
     {
       title: "시스템 에어컨",
@@ -263,7 +310,7 @@ const Services = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Professional Services</p>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">제공하는 전문 서비스</h2>
+          <Heading className="text-4xl font-bold text-gray-900 mb-4">제공하는 전문 서비스</Heading>
           <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full" />
         </div>
 
@@ -295,7 +342,8 @@ const Services = () => {
   );
 };
 
-const Portfolio = () => {
+const Portfolio = ({ isStandalone = false }: { isStandalone?: boolean }) => {
+  const Heading = isStandalone ? 'h1' : 'h2';
   const projects = [
     { id: 1, title: "시스템 에어컨 설치 완료", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfMTU3/MDAxNzc1Mjc4MTQ1MzU1.YJnIWvY1JcSNCgZF98HH_PQqDHkenONHN0iuqOuJyT0g.9_hKx5ifMkguJqx5rI_p92MGCex7h_-8C9o2TVsWIeIg.JPEG/KakaoTalk_20260404_114134079_04.jpg?type=w773" },
     { id: 2, title: "천장형 에어컨 시공 현장", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfMjk5/MDAxNzc1Mjc3OTY0MzE2.SJBfNOkeodFx1rFKCA5uyF9E5LAsFQHMCxYELY9ebekg.vHZqLVscBXlOUH-oHNvM5WNQqdYBHy9MpTVXNmfm9jgg.JPEG/SE-a7f09b44-2ea0-4e4e-8991-723905520109.jpg?type=w773" },
@@ -311,7 +359,7 @@ const Portfolio = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <p className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Our Work</p>
-            <h2 className="text-4xl font-bold text-gray-900">최근 작업 포트폴리오</h2>
+            <Heading className="text-4xl font-bold text-gray-900">최근 작업 포트폴리오</Heading>
           </div>
           <div className="flex gap-2">
             {['전체'].map(tab => (
@@ -351,7 +399,8 @@ const Portfolio = () => {
   );
 };
 
-const ContactSection = () => {
+const ContactSection = ({ isStandalone = false }: { isStandalone?: boolean }) => {
+  const Heading = isStandalone ? 'h1' : 'h2';
   return (
     <section id="견적문의" className="py-24 bg-blue-600 relative overflow-hidden">
       {/* Decorative Circles */}
@@ -360,10 +409,10 @@ const ContactSection = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center text-white max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+          <Heading className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
             지금 바로<br />
             <span className="text-blue-200">전화 상담</span>을 받아보세요
-          </h2>
+          </Heading>
           <p className="text-xl text-blue-100 mb-12 leading-relaxed">
             담당 전문가가 친절히 상담해 드립니다.<br />
             아래 번호로 전화주시면 신속하게 도와드리겠습니다.
@@ -386,12 +435,14 @@ const ContactSection = () => {
   );
 };
 
-const MapSection = () => (
+const MapSection = ({ isStandalone = false }: { isStandalone?: boolean }) => {
+  const Heading = isStandalone ? 'h1' : 'h2';
+  return (
   <section id="사무실위치" className="py-24 bg-gray-50">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto text-center">
         <p className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Location</p>
-        <h2 className="text-4xl font-bold text-gray-900 mb-12">사무실 위치</h2>
+        <Heading className="text-4xl font-bold text-gray-900 mb-12">사무실 위치</Heading>
         
         <div className="grid md:grid-cols-2 gap-8 text-left">
           <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
@@ -430,21 +481,22 @@ const MapSection = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
-const Footer = () => (
+const Footer = ({ onNavigate }: { onNavigate: NavigateHandler }) => (
   <footer className="bg-gray-900 text-gray-400 py-16">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid md:grid-cols-4 gap-12 mb-12">
         <div className="col-span-1 md:col-span-2">
-          <div className="flex items-center gap-2 mb-6">
+          <a href="/" onClick={(e) => onNavigate(e, '/')} className="flex items-center gap-2 mb-6 w-fit">
             <div className="bg-blue-600 p-2 rounded-lg">
               <Wind className="text-white w-5 h-5" />
             </div>
             <span className="text-xl font-bold text-white tracking-tight">
               조군 <span className="text-blue-500">에어컨</span>
             </span>
-          </div>
+          </a>
           <p className="max-w-sm mb-6 leading-relaxed">
             조군에어컨은 <span className="text-white font-bold underline decoration-blue-500 underline-offset-4">19년 경력</span>의 전문가가 직접 시공하는 에어컨 전문 브랜드입니다. 
             LG, 삼성, 캐리어 판매 및 설치와 업소, 공장, 오피스텔, 빌라 공사 등 화성에서 10년 가까이 믿음으로 유지해온 신뢰의 업체입니다.
@@ -471,8 +523,19 @@ const Footer = () => (
         <div>
           <h3 className="text-white font-bold mb-6">Quick Links</h3>
           <ul className="space-y-4">
-            {['서비스 소개', '포트폴리오'].map(item => (
-              <li key={item}><a href="#" className="hover:text-blue-500 transition-colors">{item}</a></li>
+            {[
+              { label: '서비스 소개', path: '/services' },
+              { label: '포트폴리오', path: '/portfolio' },
+            ].map((item) => (
+              <li key={item.path}>
+                <a
+                  href={item.path}
+                  onClick={(e) => onNavigate(e, item.path)}
+                  className="hover:text-blue-500 transition-colors"
+                >
+                  {item.label}
+                </a>
+              </li>
             ))}
           </ul>
         </div>
@@ -507,7 +570,45 @@ const Footer = () => (
   </footer>
 );
 
-export default function App() {
+function updateHeadMeta(pathname: string) {
+  const seo = getRouteSEO(pathname);
+  document.title = seo.title;
+
+  const setMeta = (selector: string, content: string) => {
+    const el = document.querySelector<HTMLMetaElement>(selector);
+    if (el) el.setAttribute('content', content);
+  };
+
+  setMeta('meta[name="description"]', seo.description);
+  setMeta('meta[property="og:title"]', seo.title);
+  setMeta('meta[property="og:description"]', seo.description);
+  setMeta('meta[property="og:url"]', seo.canonical);
+  setMeta('meta[name="twitter:title"]', seo.title);
+  setMeta('meta[name="twitter:description"]', seo.description);
+
+  const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (canonical) canonical.setAttribute('href', seo.canonical);
+}
+
+export default function App({ initialPath }: { initialPath?: string }) {
+  const [currentPath, setCurrentPath] = useState<string>(() =>
+    normalizePath(
+      initialPath ?? (typeof window !== 'undefined' ? window.location.pathname : '/'),
+    ),
+  );
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(normalizePath(window.location.pathname));
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
+    updateHeadMeta(currentPath);
+  }, [currentPath]);
+
   useEffect(() => {
     const handleGlobalTelClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement)?.closest('a[href^="tel:"]');
@@ -519,17 +620,65 @@ export default function App() {
     return () => document.removeEventListener('click', handleGlobalTelClick);
   }, []);
 
+  const handleNavigate: NavigateHandler = (e, targetPath) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+      return;
+    }
+    e.preventDefault();
+    const nextPath = normalizePath(targetPath);
+    if (nextPath !== currentPath) {
+      window.history.pushState({}, '', nextPath);
+      setCurrentPath(nextPath);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const renderMainContent = () => {
+    switch (currentPath) {
+      case '/services':
+        return (
+          <main className="pt-16">
+            <Services isStandalone />
+          </main>
+        );
+      case '/portfolio':
+        return (
+          <main className="pt-16">
+            <Portfolio isStandalone />
+          </main>
+        );
+      case '/contact':
+        return (
+          <main className="pt-16">
+            <ContactSection isStandalone />
+          </main>
+        );
+      case '/location':
+        return (
+          <main className="pt-16">
+            <MapSection isStandalone />
+          </main>
+        );
+      default:
+        return (
+          <main>
+            <Hero />
+            <Services />
+            <Portfolio />
+            <ContactSection />
+            <MapSection />
+          </main>
+        );
+    }
+  };
+
   return (
     <div className="font-sans text-gray-900 bg-white selection:bg-blue-100 selection:text-blue-600">
-      <Header />
-      <main>
-        <Hero />
-        <Services />
-        <Portfolio />
-        <ContactSection />
-        <MapSection />
-      </main>
-      <Footer />
+      <Header currentPath={currentPath} onNavigate={handleNavigate} />
+      {renderMainContent()}
+      <Footer onNavigate={handleNavigate} />
       
       {/* Floating Action Button for Mobile */}
       <div className="fixed bottom-6 right-6 z-40 md:hidden">
