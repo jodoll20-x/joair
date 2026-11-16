@@ -26,11 +26,12 @@ const DYNAMIC_UI_CLASSES = [
   'border-t',
   'border-gray-100',
   'md:hidden',
-  'px-4',
-  'py-6',
-  'space-y-4',
+  'px-5',
+  'py-5',
+  'space-y-3',
   'block',
-  'text-lg',
+  'py-1',
+  'text-base',
   'font-medium',
   'hover:text-blue-600',
   'flex',
@@ -39,8 +40,9 @@ const DYNAMIC_UI_CLASSES = [
   'gap-2',
   'bg-blue-600',
   'text-white',
-  'py-4',
+  'py-3.5',
   'rounded-xl',
+  'text-[15px]',
 ];
 
 function escapeAttr(value) {
@@ -87,12 +89,12 @@ function extractAboveFoldHtml(routePath, appHtml) {
   if (routePath === '/') {
     const heroMatch = appHtml.match(/<main>[\s\S]*?(<section[\s\S]*?<\/section>)/);
     const heroHtml = heroMatch ? heroMatch[1] : '';
-    return `<div class="font-sans text-gray-900 bg-white selection:bg-blue-100 selection:text-blue-600">${headerHtml}${heroHtml}${floatingBtnHtml}</div>`;
+    return `<div class="font-sans text-gray-900 bg-white selection:bg-blue-100 selection:text-blue-600 overflow-x-hidden">${headerHtml}${heroHtml}${floatingBtnHtml}</div>`;
   }
 
   const mainMatch = appHtml.match(/<main[^>]*>[\s\S]*?<\/main>/);
   const mainHtml = mainMatch ? mainMatch[0] : '';
-  return `<div class="font-sans text-gray-900 bg-white selection:bg-blue-100 selection:text-blue-600">${headerHtml}${mainHtml}${floatingBtnHtml}</div>`;
+  return `<div class="font-sans text-gray-900 bg-white selection:bg-blue-100 selection:text-blue-600 overflow-x-hidden">${headerHtml}${mainHtml}${floatingBtnHtml}</div>`;
 }
 
 // Brace-balanced CSS parser

@@ -1,5 +1,5 @@
 export interface RouteSEO {
-  path: '/' | '/services' | '/portfolio' | '/contact' | '/location';
+  path: '/' | '/services' | '/contact' | '/location';
   title: string;
   description: string;
   canonical: string;
@@ -21,13 +21,6 @@ export const ROUTES_SEO: Record<string, RouteSEO> = {
     description:
       '조군에어컨의 전문 서비스를 소개합니다. 아파트·상가·사무실·공장 시스템에어컨 천장형·멀티 V 시공부터 고압 스팀 완전 분해세척, 벽걸이·스탠드·2in1 신규 및 이전설치·가스 보충까지 19년 노하우로 완벽하게 시공합니다.',
     canonical: `${SITE_URL}/services`,
-  },
-  '/portfolio': {
-    path: '/portfolio',
-    title: '시공 포트폴리오 | 시스템·천장형·상가 에어컨 설치 사례 - 조군에어컨',
-    description:
-      '조군에어컨의 최근 작업 포트폴리오를 확인하세요. 시스템 에어컨 설치, 천장형 에어컨 시공, 상가 실내기 전문 시공 및 깔끔한 실외기 마감까지 실제 시공 현장 사진을 제공합니다.',
-    canonical: `${SITE_URL}/portfolio`,
   },
   '/contact': {
     path: '/contact',

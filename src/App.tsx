@@ -42,13 +42,16 @@ import {
 // --- Components ---
 
 const NAV_ITEMS = [
-  { label: '서비스', path: '/services' },
-  { label: '포트폴리오', path: '/portfolio' },
-  { label: '견적문의', path: '/contact' },
-  { label: '사무실 위치', path: '/location' },
+  { label: '서비스', path: '/services', sectionId: '서비스' },
+  { label: '견적문의', path: '/contact', sectionId: '견적문의' },
+  { label: '사무실 위치', path: '/location', sectionId: '사무실위치' },
 ] as const;
 
-type NavigateHandler = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => void;
+type NavigateHandler = (
+  e: React.MouseEvent<HTMLAnchorElement>,
+  path: string,
+  sectionId?: string,
+) => void;
 
 const Header = ({
   currentPath,
@@ -70,7 +73,7 @@ const Header = ({
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isSolid ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
+      isSolid ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-4 md:py-5'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <a
@@ -81,10 +84,10 @@ const Header = ({
           }}
           className="flex items-center gap-2"
         >
-          <div className="bg-blue-600 p-2 rounded-lg">
-            <Wind className="text-white w-6 h-6" />
+          <div className="bg-blue-600 p-1.5 md:p-2 rounded-lg">
+            <Wind className="text-white w-5 h-5 md:w-6 md:h-6" />
           </div>
-          <span className={`text-xl font-bold tracking-tight ${isSolid ? 'text-gray-900' : 'text-white'}`}>
+          <span className={`text-lg md:text-xl font-bold tracking-tight ${isSolid ? 'text-gray-900' : 'text-white'}`}>
             조군 <span className="text-blue-500">에어컨</span>
           </span>
         </a>
@@ -97,7 +100,7 @@ const Header = ({
               <a
                 key={item.path}
                 href={item.path}
-                onClick={(e) => onNavigate(e, item.path)}
+                onClick={(e) => onNavigate(e, item.path, item.sectionId)}
                 aria-current={isActive ? 'page' : undefined}
                 className={`text-sm font-medium hover:text-blue-500 transition-colors ${
                   isActive
@@ -146,7 +149,7 @@ const Header = ({
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 right-0 bg-white shadow-xl border-t border-gray-100 md:hidden"
           >
-            <div className="px-4 py-6 space-y-4">
+            <div className="px-5 py-5 space-y-3">
               {NAV_ITEMS.map((item) => {
                 const isActive = currentPath === item.path;
                 return (
@@ -154,12 +157,12 @@ const Header = ({
                     key={item.path}
                     href={item.path}
                     aria-current={isActive ? 'page' : undefined}
-                    className={`block text-lg font-medium hover:text-blue-600 ${
+                    className={`block py-1 text-base font-medium hover:text-blue-600 ${
                       isActive ? 'text-blue-600 font-bold' : 'text-gray-900'
                     }`}
                     onClick={(e) => {
                       setIsMobileMenuOpen(false);
-                      onNavigate(e, item.path);
+                      onNavigate(e, item.path, item.sectionId);
                     }}
                   >
                     {item.label}
@@ -169,9 +172,9 @@ const Header = ({
               <a 
                 href="tel:01071202305" 
                 onClick={handleTrackLead}
-                className="flex items-center justify-center gap-2 bg-blue-600 text-white py-4 rounded-xl font-bold"
+                className="flex items-center justify-center gap-2 bg-blue-600 text-white py-3.5 rounded-xl text-[15px] font-bold"
               >
-                <Phone size={20} />
+                <Phone size={18} />
                 전화 상담 연결
               </a>
             </div>
@@ -183,7 +186,7 @@ const Header = ({
 };
 
 const Hero = () => (
-  <section className="relative min-h-[90vh] md:h-screen flex items-center py-16 md:py-20 overflow-hidden">
+  <section className="relative min-h-[88vh] md:min-h-[90vh] md:h-screen flex items-center pt-24 pb-14 md:py-20 overflow-hidden">
     {/* Background Image with Overlay */}
     <div className="absolute inset-0 z-0">
       <img 
@@ -195,31 +198,31 @@ const Hero = () => (
       <div className="absolute inset-0 bg-gradient-to-r from-gray-900/95 via-gray-900/80 to-transparent" />
     </div>
 
-    <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
+    <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full">
       <motion.div 
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-2xl"
       >
-        <div className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 px-4 py-1.5 rounded-full text-blue-400 text-sm font-semibold mb-6">
+        <div className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 px-3.5 py-1.5 md:px-4 rounded-full text-blue-400 text-xs sm:text-sm font-semibold mb-4 md:mb-6">
           <MapPin size={14} />
           서울/경기 전 지역 출장 서비스
         </div>
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6">
+        <h1 className="text-[28px] sm:text-[32px] md:text-6xl lg:text-7xl font-bold text-white leading-[1.25] md:leading-[1.1] tracking-tight md:tracking-normal break-keep mb-4 md:mb-6">
           에어컨의 모든 것,<br />
           <span className="text-blue-500">19년의 노하우로</span><br />
           케어합니다.
         </h1>
-        <p className="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
+        <p className="text-[15px] sm:text-base md:text-xl text-gray-300 mb-5 md:mb-6 leading-relaxed break-keep">
           LG, 삼성, 캐리어 판매 및 설치 전문<br />
           시스템, 중대형, 업소용 에어컨, 냉난방기 전문 업체입니다.
         </p>
-        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-3xl mb-8 max-w-xl">
-          <p className="text-sm text-blue-300 font-bold mb-2 flex items-center gap-2">
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 md:p-5 rounded-2xl md:rounded-3xl mb-6 md:mb-8 max-w-xl">
+          <p className="text-xs sm:text-sm text-blue-300 font-bold mb-2 flex items-center gap-2">
             <CheckCircle2 size={16} /> 주요 이력
           </p>
-          <ul className="text-gray-300 text-xs md:text-sm space-y-1.5">
+          <ul className="text-gray-300 text-[13px] md:text-sm space-y-1.5 leading-relaxed break-keep">
             <li className="flex items-start gap-2">
               <span className="text-blue-500">•</span>
               <span>지하철 승강장 천장형 멀티(서현역) 최초 시공</span>
@@ -239,9 +242,9 @@ const Hero = () => (
           <a 
             href="tel:01071202305" 
             onClick={handleTrackLead}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-2xl shadow-blue-600/40"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3.5 md:px-8 md:py-4 rounded-2xl font-bold text-[15px] sm:text-base md:text-lg flex items-center justify-center gap-2.5 md:gap-3 transition-all transform hover:scale-105 shadow-2xl shadow-blue-600/40"
           >
-            <Phone size={22} />
+            <Phone size={20} className="md:w-[22px] md:h-[22px]" />
             빠른 전화 상담하기
           </a>
         </div>
@@ -279,7 +282,13 @@ const Hero = () => (
   </section>
 );
 
-const Services = ({ isStandalone = false }: { isStandalone?: boolean }) => {
+const Services = ({
+  isStandalone = false,
+  onNavigate,
+}: {
+  isStandalone?: boolean;
+  onNavigate?: NavigateHandler;
+}) => {
   const Heading = isStandalone ? 'h1' : 'h2';
   const services = [
     {
@@ -306,30 +315,35 @@ const Services = ({ isStandalone = false }: { isStandalone?: boolean }) => {
   ];
 
   return (
-    <section id="서비스" className="py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <p className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Professional Services</p>
-          <Heading className="text-4xl font-bold text-gray-900 mb-4">제공하는 전문 서비스</Heading>
-          <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full" />
+    <section id="서비스" className="py-14 md:py-24 bg-gray-50 scroll-mt-16">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="text-center mb-10 md:mb-16">
+          <p className="text-blue-600 font-bold tracking-wider uppercase text-xs md:text-sm mb-2 md:mb-3">Professional Services</p>
+          <Heading className="text-2xl sm:text-[26px] md:text-4xl font-bold text-gray-900 leading-snug tracking-tight md:tracking-normal break-keep mb-3 md:mb-4">제공하는 전문 서비스</Heading>
+          <div className="w-16 md:w-20 h-1 md:h-1.5 bg-blue-600 mx-auto rounded-full" />
+          {isStandalone && (
+            <p className="max-w-2xl mx-auto mt-5 text-[14px] sm:text-[15px] md:text-base text-gray-600 leading-relaxed break-keep">
+              조군에어컨은 19년 현장 시공 경력을 바탕으로 LG·삼성·캐리어 시스템에어컨 설계 및 시공, 고압 스팀 완전 분해세척, 가정용·업소용 에어컨 신규 및 이전설치를 직접 책임 시공합니다. 설치 후 A/S 1년 보장 및 오전 접수 시 당일 방문 상담이 가능합니다.
+            </p>
+          )}
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-5 md:gap-8">
           {services.map((s, idx) => (
             <motion.div 
               key={idx}
               whileHover={{ y: -10 }}
-              className="bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100"
+              className="bg-white p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100"
             >
-              <div className={`${s.color} w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg`}>
+              <div className={`${s.color} w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl flex items-center justify-center text-white mb-5 md:mb-8 shadow-lg`}>
                 {s.icon}
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">{s.title}</h3>
-              <p className="text-gray-600 mb-8 leading-relaxed">{s.desc}</p>
-              <ul className="space-y-3">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2.5 md:mb-4 leading-snug break-keep">{s.title}</h3>
+              <p className="text-[14px] sm:text-[15px] md:text-base text-gray-600 mb-5 md:mb-8 leading-relaxed break-keep">{s.desc}</p>
+              <ul className="space-y-2.5 md:space-y-3">
                 {s.items.map(item => (
-                  <li key={item} className="flex items-center gap-3 text-gray-700 font-medium">
-                    <CheckCircle2 size={18} className="text-blue-500" />
+                  <li key={item} className="flex items-center gap-2.5 md:gap-3 text-sm md:text-base text-gray-700 font-medium">
+                    <CheckCircle2 size={18} className="text-blue-500 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -337,147 +351,172 @@ const Services = ({ isStandalone = false }: { isStandalone?: boolean }) => {
             </motion.div>
           ))}
         </div>
-      </div>
-    </section>
-  );
-};
 
-const Portfolio = ({ isStandalone = false }: { isStandalone?: boolean }) => {
-  const Heading = isStandalone ? 'h1' : 'h2';
-  const projects = [
-    { id: 1, title: "시스템 에어컨 설치 완료", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfMTU3/MDAxNzc1Mjc4MTQ1MzU1.YJnIWvY1JcSNCgZF98HH_PQqDHkenONHN0iuqOuJyT0g.9_hKx5ifMkguJqx5rI_p92MGCex7h_-8C9o2TVsWIeIg.JPEG/KakaoTalk_20260404_114134079_04.jpg?type=w773" },
-    { id: 2, title: "천장형 에어컨 시공 현장", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfMjk5/MDAxNzc1Mjc3OTY0MzE2.SJBfNOkeodFx1rFKCA5uyF9E5LAsFQHMCxYELY9ebekg.vHZqLVscBXlOUH-oHNvM5WNQqdYBHy9MpTVXNmfm9jgg.JPEG/SE-a7f09b44-2ea0-4e4e-8991-723905520109.jpg?type=w773" },
-    { id: 3, title: "깔끔한 실외기 마감", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfODYg/MDAxNzc1Mjc3NTQ3Mjgw.WQeaYuVrIX2I_nUCk-9QcoOkTppqej4cdsg0wXe01YQg.H9jampFiucbfrQFfbAl5Xha7hXZcLw-ysttYz2nD80Mg.JPEG/SE-883fe084-1c37-48b1-944a-da971f6321bd.jpg?type=w773" },
-    { id: 4, title: "실내기 거치 및 연결", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfNTMg/MDAxNzc1Mjc3NDY0ODI2.EcPI9O040xCxZF5jrP4HkcgrWLnjXShn4VWrtrbyXeMg.1bjv8e4MFgM83ckGItY6lYs2X7uq77SWiy0XkGB9ggMg.JPEG/20250908_135833.jpg?type=w773" },
-    { id: 5, title: "외부 실외기 설치 작업", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfMjA3/MDAxNzc1Mjc3MjE3NjUy.CHvmx6hzJj9PpjaFpigRLy1Y0PMUpdDEDPv2lHjxXFgg.7Y-au1l3z3ne8z_aIfZKttClbVZEJZazCYdvwlvQIdcg.JPEG/KakaoTalk_20260404_114134079_14.jpg?type=w773" },
-    { id: 6, title: "상가 실내기 전문 시공", category: "설치", img: "https://postfiles.pstatic.net/MjAyNjA0MDRfMTAz/MDAxNzc1Mjc4NDIwMzgx.6mhGd9jlwtgrpLPu-AYe5skpsnrcUvy1Dm6s747ogTUg.R8dtsWPgtGRfGK_T6THPtFEUHpy8ao3hg7d2v0eoCpsg.JPEG/20260306_113611.jpg?type=w773" },
-  ];
-
-  return (
-    <section id="포트폴리오" className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div>
-            <p className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Our Work</p>
-            <Heading className="text-4xl font-bold text-gray-900">최근 작업 포트폴리오</Heading>
-          </div>
-          <div className="flex gap-2">
-            {['전체'].map(tab => (
-              <button key={tab} className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
-                tab === '전체' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}>
-                {tab}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((p) => (
-            <motion.div 
-              key={p.id}
-              layout
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="group relative overflow-hidden rounded-3xl aspect-[4/3] cursor-pointer"
+        {isStandalone && onNavigate && (
+          <div className="mt-10 md:mt-14 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="/#서비스"
+              onClick={(e) => onNavigate(e, '/', '서비스')}
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-colors shadow-sm"
             >
-              <img 
-                src={p.img} 
-                alt={p.title} 
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-                <span className="text-blue-400 text-sm font-bold mb-2">{p.category}</span>
-                <h3 className="text-white text-xl font-bold">{p.title}</h3>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              메인 페이지 서비스 영역으로 이동
+              <ArrowRight size={16} />
+            </a>
+            <a
+              href="/"
+              onClick={(e) => onNavigate(e, '/')}
+              className="inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors"
+            >
+              홈으로 돌아가기
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
 };
 
-const ContactSection = ({ isStandalone = false }: { isStandalone?: boolean }) => {
+const ContactSection = ({
+  isStandalone = false,
+  onNavigate,
+}: {
+  isStandalone?: boolean;
+  onNavigate?: NavigateHandler;
+}) => {
   const Heading = isStandalone ? 'h1' : 'h2';
   return (
-    <section id="견적문의" className="py-24 bg-blue-600 relative overflow-hidden">
+    <section id="견적문의" className="py-14 md:py-24 bg-blue-600 relative overflow-hidden scroll-mt-16">
       {/* Decorative Circles */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full -mr-48 -mt-48 blur-3xl opacity-50" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-700 rounded-full -ml-48 -mb-48 blur-3xl opacity-50" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center text-white max-w-3xl mx-auto">
-          <Heading className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+          <Heading className="text-2xl sm:text-[26px] md:text-5xl font-bold mb-5 md:mb-8 leading-[1.3] md:leading-tight tracking-tight md:tracking-normal break-keep">
             지금 바로<br />
             <span className="text-blue-200">전화 상담</span>을 받아보세요
           </Heading>
-          <p className="text-xl text-blue-100 mb-12 leading-relaxed">
+          <p className="text-[15px] sm:text-base md:text-xl text-blue-100 mb-8 md:mb-12 leading-relaxed break-keep">
             담당 전문가가 친절히 상담해 드립니다.<br />
             아래 번호로 전화주시면 신속하게 도와드리겠습니다.
           </p>
+          {isStandalone && (
+            <p className="max-w-2xl mx-auto -mt-3 mb-8 text-sm md:text-base text-blue-100 leading-relaxed break-keep">
+              설치 공간(가정·원룸·상가·사무실·공장), 희망 기종(시스템에어컨·냉난방기·벽걸이·스탠드), 시공 지역을 알려주시면 19년 경력 전문가가 예상 견적과 당일 방문 가능 일정을 안내해 드립니다.
+            </p>
+          )}
           
-          <div className="inline-flex flex-col items-center gap-6 bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 shadow-2xl">
-            <div className="flex items-center gap-4">
-              <div className="bg-white p-4 rounded-2xl shadow-lg">
-                <Phone className="text-blue-600 w-8 h-8" />
+          <div className="inline-flex flex-col items-center gap-4 md:gap-6 bg-white/10 backdrop-blur-md px-5 py-5 md:p-8 rounded-3xl md:rounded-[2.5rem] border border-white/20 shadow-2xl max-w-full">
+            <div className="flex items-center gap-3.5 md:gap-4">
+              <div className="bg-white p-3 md:p-4 rounded-xl md:rounded-2xl shadow-lg shrink-0">
+                <Phone className="text-blue-600 w-6 h-6 md:w-8 md:h-8" />
               </div>
               <div className="text-left">
-                <p className="text-blue-200 text-sm font-bold">빠른 전화 상담</p>
-                <a href="tel:01071202305" onClick={handleTrackLead} className="text-3xl md:text-4xl font-extrabold hover:text-blue-200 transition-colors">010-7120-2305</a>
+                <p className="text-blue-200 text-xs md:text-sm font-bold">빠른 전화 상담</p>
+                <a href="tel:01071202305" onClick={handleTrackLead} className="text-[22px] sm:text-2xl md:text-4xl font-extrabold hover:text-blue-200 transition-colors tracking-tight whitespace-nowrap">010-7120-2305</a>
               </div>
             </div>
           </div>
+
+          {isStandalone && onNavigate && (
+            <div className="mt-10 md:mt-12 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href="/#견적문의"
+                onClick={(e) => onNavigate(e, '/', '견적문의')}
+                className="inline-flex items-center gap-2 bg-white hover:bg-blue-50 text-blue-600 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors shadow-sm"
+              >
+                메인 페이지 견적문의 영역으로 이동
+                <ArrowRight size={16} />
+              </a>
+              <a
+                href="/"
+                onClick={(e) => onNavigate(e, '/')}
+                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/30 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors"
+              >
+                홈으로 돌아가기
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </section>
   );
 };
 
-const MapSection = ({ isStandalone = false }: { isStandalone?: boolean }) => {
+const MapSection = ({
+  isStandalone = false,
+  onNavigate,
+}: {
+  isStandalone?: boolean;
+  onNavigate?: NavigateHandler;
+}) => {
   const Heading = isStandalone ? 'h1' : 'h2';
   return (
-  <section id="사무실위치" className="py-24 bg-gray-50">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="사무실위치" className="py-14 md:py-24 bg-gray-50 scroll-mt-16">
+    <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto text-center">
-        <p className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Location</p>
-        <Heading className="text-4xl font-bold text-gray-900 mb-12">사무실 위치</Heading>
+        <p className="text-blue-600 font-bold tracking-wider uppercase text-xs md:text-sm mb-2 md:mb-3">Location</p>
+        <Heading className="text-2xl sm:text-[26px] md:text-4xl font-bold text-gray-900 mb-8 md:mb-12 leading-snug tracking-tight md:tracking-normal break-keep">사무실 위치</Heading>
+        {isStandalone && (
+          <p className="max-w-2xl mx-auto -mt-4 mb-8 md:mb-10 text-[14px] sm:text-[15px] md:text-base text-gray-600 leading-relaxed break-keep">
+            조군에어컨 본사(경기도 화성시 향남읍 서봉로 372)를 중심으로 화성·오산·평택·수원·용인 등 경기 남부권과 서울 전 지역 출장 설치·세척 서비스를 운영하고 있습니다.
+          </p>
+        )}
         
-        <div className="grid md:grid-cols-2 gap-8 text-left">
-          <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-            <div className="flex gap-4 mb-6">
-              <div className="bg-blue-50 p-3 rounded-xl h-fit">
-                <MapPin className="text-blue-600" />
+        <div className="grid md:grid-cols-2 gap-5 md:gap-8 text-left">
+          <div className="bg-white p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-sm border border-gray-100">
+            <div className="flex gap-3.5 md:gap-4 mb-5 md:mb-6">
+              <div className="bg-blue-50 p-2.5 md:p-3 rounded-xl h-fit shrink-0">
+                <MapPin className="text-blue-600 w-5 h-5 md:w-6 md:h-6" />
               </div>
               <div>
-                <h3 className="font-bold text-gray-900 mb-1">본사 주소</h3>
-                <p className="text-gray-600">경기도 화성시 향남읍 서봉로 372</p>
+                <h3 className="text-[15px] md:text-base font-bold text-gray-900 mb-1">본사 주소</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed break-keep">경기도 화성시 향남읍 서봉로 372</p>
               </div>
             </div>
-            <div className="flex gap-4">
-              <div className="bg-blue-50 p-3 rounded-xl h-fit">
-                <Clock className="text-blue-600" />
+            <div className="flex gap-3.5 md:gap-4">
+              <div className="bg-blue-50 p-2.5 md:p-3 rounded-xl h-fit shrink-0">
+                <Clock className="text-blue-600 w-5 h-5 md:w-6 md:h-6" />
               </div>
               <div>
-                <h3 className="font-bold text-gray-900 mb-1">영업 시간</h3>
-                <p className="text-gray-600">평일 09:00 - 19:00</p>
-                <p className="text-gray-600">주말 10:00 - 17:00 (예약제)</p>
+                <h3 className="text-[15px] md:text-base font-bold text-gray-900 mb-1">영업 시간</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">평일 09:00 - 19:00</p>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">주말 10:00 - 17:00 (예약제)</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-blue-600 p-8 rounded-3xl shadow-xl text-white">
-            <h3 className="font-bold text-xl mb-4">서비스 가능 지역</h3>
-            <p className="text-blue-100 leading-relaxed">
+          <div className="bg-blue-600 p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-xl text-white">
+            <h3 className="font-bold text-lg md:text-xl mb-3 md:mb-4">서비스 가능 지역</h3>
+            <p className="text-sm md:text-base text-blue-100 leading-relaxed break-keep">
               서울 전 지역 및 경기 주요 도시<br />
               (화성, 오산, 평택, 수원, 용인, 성남, 하남, 김포, 안양, 과천, 의왕, 군포, 시흥, 안산 등)
             </p>
-            <div className="mt-6 pt-6 border-t border-blue-500/30">
-              <p className="text-sm text-blue-200">※ 그 외 지역은 전화 문의 부탁드립니다.</p>
+            <div className="mt-5 md:mt-6 pt-5 md:pt-6 border-t border-blue-500/30">
+              <p className="text-xs md:text-sm text-blue-200">※ 그 외 지역은 전화 문의 부탁드립니다.</p>
             </div>
           </div>
         </div>
+
+        {isStandalone && onNavigate && (
+          <div className="mt-10 md:mt-12 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="/#사무실위치"
+              onClick={(e) => onNavigate(e, '/', '사무실위치')}
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-colors shadow-sm"
+            >
+              메인 페이지 위치 안내로 이동
+              <ArrowRight size={16} />
+            </a>
+            <a
+              href="/"
+              onClick={(e) => onNavigate(e, '/')}
+              className="inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors"
+            >
+              홈으로 돌아가기
+            </a>
+          </div>
+        )}
       </div>
     </div>
   </section>
@@ -485,29 +524,29 @@ const MapSection = ({ isStandalone = false }: { isStandalone?: boolean }) => {
 };
 
 const Footer = ({ onNavigate }: { onNavigate: NavigateHandler }) => (
-  <footer className="bg-gray-900 text-gray-400 py-16">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid md:grid-cols-4 gap-12 mb-12">
+  <footer className="bg-gray-900 text-gray-400 py-12 md:py-16">
+    <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+      <div className="grid md:grid-cols-3 gap-8 md:gap-12 mb-8 md:mb-12">
         <div className="col-span-1 md:col-span-2">
-          <a href="/" onClick={(e) => onNavigate(e, '/')} className="flex items-center gap-2 mb-6 w-fit">
+          <a href="/" onClick={(e) => onNavigate(e, '/')} className="flex items-center gap-2 mb-5 md:mb-6 w-fit">
             <div className="bg-blue-600 p-2 rounded-lg">
               <Wind className="text-white w-5 h-5" />
             </div>
-            <span className="text-xl font-bold text-white tracking-tight">
+            <span className="text-lg md:text-xl font-bold text-white tracking-tight">
               조군 <span className="text-blue-500">에어컨</span>
             </span>
           </a>
-          <p className="max-w-sm mb-6 leading-relaxed">
+          <p className="max-w-sm mb-5 md:mb-6 text-sm md:text-base leading-relaxed break-keep">
             조군에어컨은 <span className="text-white font-bold underline decoration-blue-500 underline-offset-4">19년 경력</span>의 전문가가 직접 시공하는 에어컨 전문 브랜드입니다. 
             LG, 삼성, 캐리어 판매 및 설치와 업소, 공장, 오피스텔, 빌라 공사 등 화성에서 10년 가까이 믿음으로 유지해온 신뢰의 업체입니다.
           </p>
-          <div className="bg-gray-800/50 p-4 rounded-xl mb-8 border border-gray-800">
-            <p className="text-blue-400 font-bold text-sm mb-2">주요 이력</p>
-            <p className="text-xs leading-relaxed text-gray-400">
+          <div className="bg-gray-800/50 p-4 rounded-xl mb-6 md:mb-8 border border-gray-800">
+            <p className="text-blue-400 font-bold text-xs md:text-sm mb-2">주요 이력</p>
+            <p className="text-xs leading-relaxed text-gray-400 break-keep">
               지하철 승강장 천장형 멀티(서현역), 주거형 오피스텔 천장형(구로), 스트레스 프리존(강남구) 등 최초 시공자
             </p>
           </div>
-          <div className="mb-4 text-sm space-y-1">
+          <div className="mb-4 text-[13px] md:text-sm space-y-1.5 leading-relaxed break-keep">
             <p>대표: 조인형 | 사업자번호: 102-04-02694</p>
             <p>주소: 경기도 화성시 향남읍 서봉로 372</p>
             <p>전화: 010-7120-2305</p>
@@ -519,49 +558,28 @@ const Footer = ({ onNavigate }: { onNavigate: NavigateHandler }) => (
             </a>
           </div>
         </div>
-        
         <div>
-          <h3 className="text-white font-bold mb-6">Quick Links</h3>
-          <ul className="space-y-4">
-            {[
-              { label: '서비스 소개', path: '/services' },
-              { label: '포트폴리오', path: '/portfolio' },
-            ].map((item) => (
-              <li key={item.path}>
-                <a
-                  href={item.path}
-                  onClick={(e) => onNavigate(e, item.path)}
-                  className="hover:text-blue-500 transition-colors"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="text-white font-bold mb-6">Contact Info</h3>
-          <ul className="space-y-4">
+          <h3 className="text-white text-base font-bold mb-4 md:mb-6">Contact Info</h3>
+          <ul className="space-y-3 md:space-y-4 text-sm md:text-base">
             <li className="flex items-center gap-3">
-              <Phone size={16} className="text-blue-500" />
+              <Phone size={16} className="text-blue-500 shrink-0" />
               <a href="tel:01071202305" onClick={handleTrackLead} className="hover:text-white transition-colors">010-7120-2305</a>
             </li>
             <li className="flex items-center gap-3">
-              <MapPin size={16} className="text-blue-500" />
-              경기도 화성시 향남읍 서봉로 372
+              <MapPin size={16} className="text-blue-500 shrink-0" />
+              <span>경기도 화성시 향남읍 서봉로 372</span>
             </li>
             <li className="flex items-center gap-3">
-              <Clock size={16} className="text-blue-500" />
-              연중무휴 09:00 - 20:00
+              <Clock size={16} className="text-blue-500 shrink-0" />
+              <span>연중무휴 09:00 - 20:00</span>
             </li>
           </ul>
         </div>
       </div>
       
-      <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+      <div className="pt-6 md:pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-xs md:text-sm">
         <p>© 2026 조군에어컨. All rights reserved.</p>
-        <div className="flex gap-8">
+        <div className="flex gap-6 md:gap-8">
           <a href="#" className="hover:text-white">이용약관</a>
           <a href="#" className="hover:text-white font-bold text-blue-400">개인정보처리방침</a>
         </div>
@@ -609,6 +627,22 @@ export default function App({ initialPath }: { initialPath?: string }) {
     updateHeadMeta(currentPath);
   }, [currentPath]);
 
+  const scrollToSection = (sectionId: string) => {
+    const target = document.getElementById(sectionId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  useEffect(() => {
+    if (currentPath === '/' && typeof window !== 'undefined' && window.location.hash) {
+      const sectionId = decodeURIComponent(window.location.hash.slice(1));
+      if (sectionId) {
+        requestAnimationFrame(() => scrollToSection(sectionId));
+      }
+    }
+  }, [currentPath]);
+
   useEffect(() => {
     const handleGlobalTelClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement)?.closest('a[href^="tel:"]');
@@ -620,16 +654,33 @@ export default function App({ initialPath }: { initialPath?: string }) {
     return () => document.removeEventListener('click', handleGlobalTelClick);
   }, []);
 
-  const handleNavigate: NavigateHandler = (e, targetPath) => {
+  const handleNavigate: NavigateHandler = (e, targetPath, sectionId) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
       return;
     }
     e.preventDefault();
+
+    // When a sectionId is provided (top menu or back-to-section link),
+    // smoothly scroll within the main one-page layout.
+    if (sectionId) {
+      if (currentPath !== '/') {
+        window.history.pushState({}, '', `/#${sectionId}`);
+        setCurrentPath('/');
+        setTimeout(() => scrollToSection(sectionId), 50);
+      } else {
+        if (window.location.hash !== `#${sectionId}`) {
+          window.history.replaceState({}, '', `/#${sectionId}`);
+        }
+        scrollToSection(sectionId);
+      }
+      return;
+    }
+
     const nextPath = normalizePath(targetPath);
-    if (nextPath !== currentPath) {
+    if (nextPath !== currentPath || window.location.hash) {
       window.history.pushState({}, '', nextPath);
       setCurrentPath(nextPath);
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -640,25 +691,19 @@ export default function App({ initialPath }: { initialPath?: string }) {
       case '/services':
         return (
           <main className="pt-16">
-            <Services isStandalone />
-          </main>
-        );
-      case '/portfolio':
-        return (
-          <main className="pt-16">
-            <Portfolio isStandalone />
+            <Services isStandalone onNavigate={handleNavigate} />
           </main>
         );
       case '/contact':
         return (
           <main className="pt-16">
-            <ContactSection isStandalone />
+            <ContactSection isStandalone onNavigate={handleNavigate} />
           </main>
         );
       case '/location':
         return (
           <main className="pt-16">
-            <MapSection isStandalone />
+            <MapSection isStandalone onNavigate={handleNavigate} />
           </main>
         );
       default:
@@ -666,7 +711,6 @@ export default function App({ initialPath }: { initialPath?: string }) {
           <main>
             <Hero />
             <Services />
-            <Portfolio />
             <ContactSection />
             <MapSection />
           </main>
@@ -675,7 +719,7 @@ export default function App({ initialPath }: { initialPath?: string }) {
   };
 
   return (
-    <div className="font-sans text-gray-900 bg-white selection:bg-blue-100 selection:text-blue-600">
+    <div className="font-sans text-gray-900 bg-white selection:bg-blue-100 selection:text-blue-600 overflow-x-hidden">
       <Header currentPath={currentPath} onNavigate={handleNavigate} />
       {renderMainContent()}
       <Footer onNavigate={handleNavigate} />
