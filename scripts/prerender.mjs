@@ -583,10 +583,11 @@ async function prerender() {
       `<div id="root">${appHtml}</div>`,
     );
 
+    const cleanRoute = route.path.replace(/^\/+|\/+$/g, '');
     const outPath =
-      route.path === '/'
+      cleanRoute === ''
         ? path.join(distDir, 'index.html')
-        : path.join(distDir, route.path.slice(1), 'index.html');
+        : path.join(distDir, cleanRoute, 'index.html');
 
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, pageHtml, 'utf-8');

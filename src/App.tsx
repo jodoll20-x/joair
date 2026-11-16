@@ -42,9 +42,9 @@ import {
 // --- Components ---
 
 const NAV_ITEMS = [
-  { label: '서비스', path: '/services', sectionId: '서비스' },
-  { label: '견적문의', path: '/contact', sectionId: '견적문의' },
-  { label: '사무실 위치', path: '/location', sectionId: '사무실위치' },
+  { label: '서비스', path: '/services/', sectionId: '서비스' },
+  { label: '견적문의', path: '/contact/', sectionId: '견적문의' },
+  { label: '사무실 위치', path: '/location/', sectionId: '사무실위치' },
 ] as const;
 
 type NavigateHandler = (
@@ -480,8 +480,7 @@ const MapSection = ({
               </div>
               <div>
                 <h3 className="text-[15px] md:text-base font-bold text-gray-900 mb-1">영업 시간</h3>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">평일 09:00 - 19:00</p>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">주말 10:00 - 17:00 (예약제)</p>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">연중무휴 09:00 - 20:00</p>
               </div>
             </div>
           </div>
@@ -688,19 +687,19 @@ export default function App({ initialPath }: { initialPath?: string }) {
 
   const renderMainContent = () => {
     switch (currentPath) {
-      case '/services':
+      case '/services/':
         return (
           <main className="pt-16">
             <Services isStandalone onNavigate={handleNavigate} />
           </main>
         );
-      case '/contact':
+      case '/contact/':
         return (
           <main className="pt-16">
             <ContactSection isStandalone onNavigate={handleNavigate} />
           </main>
         );
-      case '/location':
+      case '/location/':
         return (
           <main className="pt-16">
             <MapSection isStandalone onNavigate={handleNavigate} />
