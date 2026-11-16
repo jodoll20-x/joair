@@ -551,7 +551,7 @@ const Footer = ({ onNavigate }: { onNavigate: NavigateHandler }) => (
             <p>전화: 010-7120-2305</p>
           </div>
           <div className="flex gap-4">
-            <a href="https://blog.naver.com/jodoll0203" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-all">
+            <a href="https://blog.naver.com/jodoll79" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-all">
               <MessageCircle size={18} />
               <span className="text-sm font-bold">Naver Blog</span>
             </a>
